@@ -1,0 +1,18 @@
+<div class="d-flex justify-content-center ">
+    <a (click)="isCollapsed = !isCollapsed" [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample"
+        class="btn btn-warning">Detalhes</a>
+</div>
+<div [ngClass]="{'desconto': desconto != 0, 'sem-desconto': desconto == 0}" class="text-center mt-1" id="collapseExample" [ngbCollapse]="isCollapsed">
+    <div *ngIf="desconto != 0; else naoTemDesconto">
+        <p>Valor sem desconto: <strong class="text-success">{{plano.valor | currency: 'BRL' }}</strong></p>
+        <div>
+            Tempo de contrato: <strong class="text-success">{{plano.quantidadeMeses}}</strong> meses<br>
+            Desconto: <strong class="text-success">{{desconto | currency: 'BRL'}}.</strong>
+        </div>
+    </div>
+    <ng-template #naoTemDesconto>
+        <div>
+            Plano não oferece desconto
+        </div>
+    </ng-template>
+</div>

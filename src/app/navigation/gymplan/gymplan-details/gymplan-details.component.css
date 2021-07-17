@@ -1,0 +1,7 @@
+.desconto{
+    border: 3px dashed #198754;
+}
+
+.sem-desconto{
+    border: 3px dashed #cccccc;
+}

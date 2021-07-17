@@ -1,0 +1,24 @@
+<nav class="navbar navbar-expand-lg bg-warning fixed-top navbar-transparent">
+    <div class="container-fluid row">
+        <div class="navbar-translate col-lg-10 col-md-6 col-md col-sm">
+            <a class="nav-link" href="#pablo">
+                <img src="../../../../assets/img/OlimpoIcon.png" height="65" alt="Olimpo Icon">
+            </a>
+        </div>
+        <div class="col-lg-2 col-md-6 col-md col-sm">
+            <ul #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed" class="navbar-nav">
+                <li class="nav-item active">
+                    <a class="nav-link">
+                        Horários
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link">Dúvidas</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link">Login</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>

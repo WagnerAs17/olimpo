@@ -1,0 +1,15 @@
+.card-shadow{
+    -webkit-border-radius: 10px 10px 10px 10px;
+    border-radius: 10px 10px 10px 10px;
+    background: #fff;
+    padding: 2%;
+    max-width: 70%;
+    position: relative;
+    -webkit-box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
+    box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
+    width: 35rem;
+}
+
+.container{
+    font-size: 15pt;
+}
