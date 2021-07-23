@@ -1,4 +1,4 @@
-<section class="d-flex justify-content-around container">
+<section class="d-flex justify-content-around container mb-5">
     <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#ffc107" type = "square-loader" [fullScreen] = "false"><p style="color: white" >Carregando...</p></ngx-spinner>
     <div *ngFor="let plano of planos | async">
         <div class="card-shadow">
@@ -12,5 +12,4 @@
             </olp-gymplan-details>
         </div>
     </div>
-
 </section>

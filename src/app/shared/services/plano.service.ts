@@ -1,17 +1,21 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { environment } from '../../../environments/environment';
+import { BaseService } from './base.service';
 import { Data } from '../models/data';
 import { GymPlan } from '../models/gymplan';
-const urlBase = environment.localhost + 'api/v1/planos';
+
 @Injectable({
     providedIn: 'root'
 })
-export class PlanoService {
-    constructor(private http: HttpClient){}
+export class PlanoService extends BaseService {
+    
+    URL_PLANOS = "api/v1/planos";
+    constructor(protected http: HttpClient){
+        super(http);
+    }
 
     obterPlanos(){
-        return this.http.get<Data<GymPlan[]>>(urlBase);
+        return super.getAsync<Data<GymPlan[]>>(this.URL_PLANOS);
     }
 }

@@ -1,0 +1,27 @@
+.login{
+    margin-top: 2%;
+    -webkit-border-radius: 10px 10px 10px 10px;
+    border-radius: 10px 10px 10px 10px;
+    background: #fff;
+    padding:  0.5%;
+    max-width: 25%;
+    position: relative;
+    -webkit-box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
+    box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
+    width: 50rem;
+}
+
+
+.img-login{
+    width:45vh; 
+    height:25vh;
+}
+
+
+.btn-esqueci-senha{
+    background-color: rgb(89, 41, 221);
+    color: #ffffff;
+}
+.vertical-center{
+    margin-top: 8vh;
+}

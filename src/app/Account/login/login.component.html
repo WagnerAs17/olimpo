@@ -1,0 +1,33 @@
+<div class="main-container ">
+    <section class="d-flex justify-content-center vertical-center">
+        <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#ffc107" type = "square-loader" [fullScreen] = "false"><p style="color: white" >Carregando...</p></ngx-spinner>
+        <div class="login py-5">
+            <img class="img-login" src="../../../assets/img/login_v3.svg" alt="imagem de login">
+            <form [formGroup]="loginForm" class="form-login mt-2">
+                <div class="pr-5 pl-5 row g-3 align-items-center">
+                    <div class="col-2 col-md-2">
+                        <label for="email" class="col-form-label">E-mail</label>
+                    </div>
+                    <div class="col-10 col-md-10">
+                        <input type="email" id="email" class="form-control" formControlName="email" >
+                    </div>
+                    <div class="col-2">
+                        <label for="Senha" class="col-form-label">Senha</label>
+                    </div>
+                    <div class="col-10">
+                        <input type="password" id="Senha" class="form-control" formControlName="senha">
+                    </div>
+                    
+                </div>
+                <div class="d-flex justify-content-around mt-2">
+                    <div><a (click)="autenticarAluno()" class="btn btn-warning">Sou Aluno</a></div>
+                    <div><a (click)="autenticarColaborador()" class="btn btn-secondary">Sou Colaborador</a></div>
+                </div>
+                
+                <div class="mt-2 d-flex justify-content-center">
+                    <button class="btn btn-esqueci-senha">Esqueci minha Senha</button>
+                </div>
+            </form>
+        </div>
+    </section>
+</div>
