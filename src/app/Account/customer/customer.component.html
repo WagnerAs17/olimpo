@@ -1,4 +1,7 @@
 <div class="main-container ">
+    <div toastContainer>
+
+    </div >
     <section class="d-flex justify-content-center vertical-center">
         <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#ffc107" type="square-loader"
             [fullScreen]="false">
@@ -7,7 +10,7 @@
         <div class="customer py-5">
             <div class="d-flex justify-content-end">
                 <img class="img-login" src="../../../assets/img/bem_vindo.svg" alt="imagem de login">
-                
+
             </div>
             <form [formGroup]="customerForm" class="form-login mt-2" (ngSubmit)="matricular()">
                 <div class="pr-5 pl-5 row g-3 align-items-center">
@@ -19,6 +22,9 @@
                                 </div>
                                 <div>
                                     <input type="nome" id="nome" class="form-control" formControlName="nome">
+                                    <span class="text-danger" *ngIf="displayMessage?.nome">
+                                        <p [innerHTML]="displayMessage?.nome"></p>
+                                    </span>
                                 </div>
                             </div>
 
@@ -27,7 +33,11 @@
                                     <label for="cpf" class="col-form-label">CPF</label>
                                 </div>
                                 <div>
-                                    <input type="cpf" id="cpf" class="form-control" formControlName="cpf">
+                                    <input [textMask]="{mask: MASK.cpf.textMask}" type="cpf" id="cpf"
+                                        class="form-control" formControlName="cpf">
+                                    <span class="text-danger" *ngIf="displayMessage?.cpf">
+                                        <p [innerHTML]="displayMessage?.cpf"></p>
+                                    </span>
                                 </div>
                             </div>
                         </div>
@@ -41,6 +51,9 @@
                                 </div>
                                 <div>
                                     <input type="email" id="email" class="form-control" formControlName="email">
+                                    <span class="text-danger" *ngIf="displayMessage?.email">
+                                        <p [innerHTML]="displayMessage?.email"></p>
+                                    </span>
                                 </div>
                             </div>
 
@@ -49,7 +62,11 @@
                                     <label for="dataNascimento" class="col-form-label">Data Nascimento</label>
                                 </div>
                                 <div>
-                                    <input type="date" id="dataNascimento" class="form-control" formControlName="dataNascimento">
+                                    <input type="date" id="dataNascimento" class="form-control"
+                                        formControlName="dataNascimento">
+                                    <span class="text-danger" *ngIf="displayMessage?.dataNascimento">
+                                        <p [innerHTML]="displayMessage?.dataNascimento"></p>
+                                    </span>
                                 </div>
                             </div>
                         </div>
@@ -63,6 +80,9 @@
                                 </div>
                                 <div>
                                     <input type="password" id="senha" class="form-control" formControlName="senha">
+                                    <span class="text-danger" *ngIf="displayMessage?.senha">
+                                        <p [innerHTML]="displayMessage?.senha"></p>
+                                    </span>
                                 </div>
                             </div>
 
@@ -73,6 +93,9 @@
                                 <div>
                                     <input type="password" id="senhaConfirmarcao" class="form-control"
                                         formControlName="senhaConfirmarcao">
+                                    <span class="text-danger" *ngIf="displayMessage?.senhaConfirmarcao">
+                                        <p [innerHTML]="displayMessage?.senhaConfirmarcao"></p>
+                                    </span>
                                 </div>
                             </div>
                         </div>
@@ -80,17 +103,21 @@
                     <div class="col-12">
                         <div class="row">
                             <div class="col-6">
-                                <select  (ngModelChange)="mudou()" formControlName="planoId" class="form-select form-select"
+                                <select formControlName="planoId" class="form-select form-select"
                                     aria-label=".form-select-sm example">
                                     <option value="">Selecione</option>
                                     <option *ngFor="let plano of planos" [value]="plano.id">{{plano.nome}}</option>
                                 </select>
+                                <span class="text-danger" *ngIf="displayMessage?.planoId">
+                                    <p [innerHTML]="displayMessage?.planoId"></p>
+                                </span>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="mt-3 d-flex justify-content-center">
-                    <button type="submit" class="btn btn-matricular text-white">Matricular</button>
+                    <button [disabled]="customerForm.invalid || !customerForm.dirty" type="submit"
+                        class="btn btn-matricular text-white">Matricular</button>
                 </div>
             </form>
         </div>

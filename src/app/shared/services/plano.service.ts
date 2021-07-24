@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { BaseService } from './base.service';
-import { Data } from '../models/data';
 import { GymPlan } from '../models/gymplan';
 
 @Injectable({
@@ -16,6 +15,6 @@ export class PlanoService extends BaseService {
     }
 
     obterPlanos(){
-        return super.getAsync<Data<GymPlan[]>>(this.URL_PLANOS);
+        return super.getAsync<GymPlan[]>(this.URL_PLANOS);
     }
 }

@@ -1,4 +1,6 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { throwError } from 'rxjs';
+import { catchError, map } from "rxjs/operators";
 
 import { environment } from '../../../environments/environment';
 
@@ -8,10 +10,33 @@ export abstract class BaseService {
     constructor(protected http: HttpClient){}
 
     protected getAsync<T>(url: string){
-        return this.http.get<T>(urlBase + url);
+        return this.http.get<T>(urlBase + url)
+            .pipe(
+                map(this.extractData),
+                catchError(this.serviceError)
+            );
     }
 
-    protected postAsync<T>(payload: T, url: string,  headers: any = {}){
-        return this.http.post(url, payload, headers);
+    protected postAsync<T>(payload: any, url: string){
+        return this.http.post<T>(urlBase + url, payload)
+            .pipe(map(this.extractData), catchError(this.serviceError));
+    }
+
+    protected serviceError(response: Response | any){
+        let customError: string[] = [];
+
+        if(response instanceof HttpErrorResponse){
+            if(response.statusText === 'Unknown Error'){
+                customError.push('Ocorreu um erro desconhecido');
+                alert("erro")
+                response.error.errors = customError;
+            }
+        }
+
+        return throwError(customError);
+    }
+
+    protected extractData(response: any){
+        return response?.data || {};
     }
 }

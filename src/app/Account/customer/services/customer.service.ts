@@ -7,12 +7,12 @@ import { Customer } from '../models/customer';
     providedIn: 'root'
 })
 export class CustomerService extends BaseService{
-    URL_CUSTOMER =  "/api/v1/clientes";
+    URL_CUSTOMER =  "api/v1/clientes";
     constructor(protected http: HttpClient){
         super(http);
     }
 
-    async matricular(aluno: Customer){
-        return super.postAsync(aluno, this.URL_CUSTOMER); 
+    matricular(aluno: Customer){
+        return super.postAsync<string>(aluno, this.URL_CUSTOMER); 
     }
 }

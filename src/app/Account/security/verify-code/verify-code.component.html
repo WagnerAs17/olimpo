@@ -1,0 +1,22 @@
+<div class="main-container ">
+    <section class="d-flex justify-content-center vertical-center">
+        <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#ffc107" type = "square-loader" [fullScreen] = "false"><p style="color: white" >Carregando...</p></ngx-spinner>
+        <div class="verify-code py-5">
+            <img class="img-verify-code" src="../../../../assets/img/mensagem_enviada.svg" alt="imagem de login">
+            <form [formGroup]="verifyCodeForm" class="form-login mt-3" (ngSubmit)="verifyCode()">
+                <div class="p-2 row g-3 align-items-center">
+                    <div class="col-2 col-md-2">
+                        <label for="codigo" class="col-form-label">Código</label>
+                    </div>
+                    <div class="col-10 col-md-10">
+                        <input type="text" id="codigo" class="form-control" formControlName="codigo" >
+                    </div>
+                    
+                </div>
+                <div class="mt-2 d-flex justify-content-center">
+                    <button type="submit" class="btn btn-code">Confirmar</button>
+                </div>
+            </form>
+        </div>
+    </section>
+</div>

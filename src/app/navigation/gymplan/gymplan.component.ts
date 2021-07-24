@@ -24,7 +24,7 @@ export class GymPlanComponent implements OnInit {
         this.spinnerService.show();
         this.planoService.obterPlanos().subscribe(planos => {
             setTimeout(() =>{
-                this.planos = of(planos?.data.sort((a, b) => a.valor - b.valor));
+                this.planos = of(planos?.sort((a, b) => a.valor - b.valor));
                 this.spinnerService.hide();
             }, 1000)
         })
