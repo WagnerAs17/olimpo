@@ -5,7 +5,7 @@ import { NgxSpinnerService } from "ngx-spinner";
 
 import { GymPlan } from 'src/app/shared/models/gymplan';
 
-import { PlanoService } from '../../shared/services/plano.service';
+import { GymPlanService } from '../../shared/services/gymplan.service';
 
 @Component({
     selector: 'olp-gymplan',
@@ -16,13 +16,13 @@ export class GymPlanComponent implements OnInit {
     planos: Observable<GymPlan[]>;
     constructor
     (
-        private planoService: PlanoService, 
+        private gymPlanService: GymPlanService, 
         private spinnerService: NgxSpinnerService
     ) { }
 
     ngOnInit(): void { 
         this.spinnerService.show();
-        this.planoService.obterPlanos().subscribe(planos => {
+        this.gymPlanService.getGymPlans().subscribe(planos => {
             setTimeout(() =>{
                 this.planos = of(planos?.sort((a, b) => a.valor - b.valor));
                 this.spinnerService.hide();

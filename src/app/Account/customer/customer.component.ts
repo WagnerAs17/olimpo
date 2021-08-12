@@ -8,7 +8,7 @@ import { MASKS, NgBrazilValidators } from 'ng-brazil';
 import { ToastrService } from 'ngx-toastr';
 
 import { CustomerService } from './services/customer.service';
-import { PlanoService } from 'src/app/shared/services/plano.service';
+import { GymPlanService } from 'src/app/shared/services/gymplan.service';
 import { GymPlan } from 'src/app/shared/models/gymplan';
 import { Customer } from './models/customer';
 import { validationMessage } from './messages/customer-validation-message';
@@ -29,13 +29,13 @@ export class CustomerComponent implements OnInit, AfterViewInit, FormValidation 
 
     MASK = MASKS;
     customerForm: FormGroup;
-    planos: GymPlan[];
+    gymPlans: GymPlan[];
 
     constructor
         (
             private fb: FormBuilder,
             private customerService: CustomerService,
-            private planoService: PlanoService,
+            private gymPlanService: GymPlanService,
             private spinnerService: NgxSpinnerService,
             private toast: ToastrService,
             private userStore: UserStoreService,
@@ -45,8 +45,8 @@ export class CustomerComponent implements OnInit, AfterViewInit, FormValidation 
     }
 
     ngOnInit(): void {
-        this.obterPlanos()
-        this.criarForGroup();
+        this.getGymPlans()
+        this.createFormGroup();
     }
 
     ngAfterViewInit(): void {
@@ -55,21 +55,42 @@ export class CustomerComponent implements OnInit, AfterViewInit, FormValidation 
     }
 
     matricular() {
+        this.spinnerService.show();
+        
         let aluno = this.customerForm.getRawValue() as Customer;
+        aluno.cpf = this.onlyNumbersCpf(aluno);
 
-        aluno.cpf = aluno.cpf.replace(".", "").replace(".", "").replace("-", "");
-
-         this.customerService.matricular(aluno).subscribe(id => {
-
-            this.userStore.setUserId(id);
-            this.toast.success('Favor verificar o código no e-mail', 'Cadastro Sucesso')
-            .onHidden.subscribe(() => {
-                this.router.navigate(['/confirmar-conta']);
-            })
-        }, err => this.toast.error("Erro de validação", "erro"))
+        this.customerService.matricular(aluno).subscribe(data => {
+            this.success(data.id);
+        }, () => this.error())
     }
 
-    criarForGroup() {
+    setMessages(displayMessage: DisplayMessage) {
+        this.displayMessage = displayMessage;
+    }
+
+    private success(id: string){
+        this.spinnerService.hide();
+        this.userStore.setUserId(id);
+        alert("Cadastro realizado com sucesso, favor verificar o código enviado por email !");
+        this.router.navigate(['/confirmar-conta']);
+    }
+
+    private error(){
+        this.spinnerService.hide()
+    }
+
+    private getGymPlans() {
+        this.spinnerService.show();
+        this.gymPlanService.getGymPlans().subscribe(gymPlans => {
+            setTimeout(() => {
+                this.gymPlans = gymPlans;
+                this.spinnerService.hide();
+            }, 1000)
+        }, () => { alert("Erro"), this.spinnerService.hide() })
+    }
+
+    private createFormGroup() {
         let senha = new FormControl('', [Validators.required, CustomValidators.rangeLength([6, 15])]);
         let senhaConfirmarcao = new FormControl('', [Validators.required, CustomValidators.rangeLength([6, 15]), CustomValidators.equalTo(senha)])
         this.customerForm = this.fb.group({
@@ -83,17 +104,7 @@ export class CustomerComponent implements OnInit, AfterViewInit, FormValidation 
         });
     }
 
-    private obterPlanos() {
-        this.spinnerService.show();
-        this.planoService.obterPlanos().subscribe(planos => {
-            setTimeout(() => {
-                this.planos = planos;
-                this.spinnerService.hide();
-            }, 1000)
-        }, () => { alert("Erro"), this.spinnerService.hide() })
-    }
-
-    setMessages(displayMessage: DisplayMessage) {
-        this.displayMessage = displayMessage;
+    private onlyNumbersCpf(aluno: Customer){
+        return aluno.cpf.replace(".", "").replace(".", "").replace("-", "");
     }
 }

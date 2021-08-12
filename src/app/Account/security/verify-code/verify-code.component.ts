@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ContaService } from 'src/app/shared/services/conta.service';
+import { Router } from '@angular/router';
+import { AccountService } from 'src/app/shared/services/account.service';
 
 import { UserStoreService } from 'src/app/shared/store/user-store.service'
 @Component({
@@ -13,7 +14,8 @@ export class VerifyCodeComponent implements OnInit {
     constructor(
         private storeUser: UserStoreService,
         private fb: FormBuilder,
-        private contaService: ContaService
+        private accountService: AccountService,
+        private router: Router
     ) { }
 
     ngOnInit(): void {
@@ -26,13 +28,14 @@ export class VerifyCodeComponent implements OnInit {
     verifyCode(){
         var verifyCode = this.verifyCodeForm.getRawValue();
         this.storeUser.getUserId().subscribe(id => {
-            alert("ID" + id);
             verifyCode.id = id;
         });
 
 
-        this.contaService.confirmarConta(verifyCode).subscribe(() => {
+        this.accountService.confirmAccount(verifyCode).subscribe(() => {
             alert("Código confirmado com sucesso")
+            this.storeUser.removerUserId();
+            this.router.navigate(['/home']);
         }, () =>  alert("Código inválido"))
     }
 }

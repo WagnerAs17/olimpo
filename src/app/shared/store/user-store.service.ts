@@ -8,6 +8,7 @@ export class UserStoreService{
     private storeSuject = new BehaviorSubject<any>(null);
     
     setUserId(id: string){
+        alert("Id: " +  JSON.stringify(id))
         this.storeSuject.next(id);
     }
 

@@ -106,7 +106,7 @@
                                 <select formControlName="planoId" class="form-select form-select"
                                     aria-label=".form-select-sm example">
                                     <option value="">Selecione</option>
-                                    <option *ngFor="let plano of planos" [value]="plano.id">{{plano.nome}}</option>
+                                    <option *ngFor="let gymPlan of gymPlans" [value]="gymPlan.id">{{gymPlan.nome}}</option>
                                 </select>
                                 <span class="text-danger" *ngIf="displayMessage?.planoId">
                                     <p [innerHTML]="displayMessage?.planoId"></p>
