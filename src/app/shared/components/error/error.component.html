@@ -1,0 +1,14 @@
+<ngb-accordion #a="ngbAccordion" activeIds="custom-panel-1" [type]="'danger'" []>
+    <ngb-panel id="custom-panel-1">
+      <ng-template ngbPanelHeader let-opened="opened">
+        <div class="d-flex align-items-center justify-content-between">
+          <h5 class="m-0 text-white">Mensagens de erro</h5>
+        </div>
+      </ng-template>
+      <ng-template ngbPanelContent>
+        <div *ngFor="let erro of errors">
+            <p>{{erro}}</p>
+        </div>
+      </ng-template>
+    </ngb-panel>
+</ngb-accordion>

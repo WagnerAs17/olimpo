@@ -5,7 +5,6 @@ import { Router } from '@angular/router';
 import { NgxSpinnerService } from "ngx-spinner";
 import { CustomValidators } from 'ngx-custom-validators';
 import { MASKS, NgBrazilValidators } from 'ng-brazil';
-import { ToastrService } from 'ngx-toastr';
 
 import { CustomerService } from './services/customer.service';
 import { GymPlanService } from 'src/app/shared/services/gymplan.service';
@@ -26,6 +25,7 @@ export class CustomerComponent implements OnInit, AfterViewInit, FormValidation 
     formValidation: FormValidationService;
     displayMessage: DisplayMessage;
     @ViewChildren(FormControlName, { read: ElementRef }) formInputElement: ElementRef[];
+    errors: string[];
 
     MASK = MASKS;
     customerForm: FormGroup;
@@ -37,7 +37,6 @@ export class CustomerComponent implements OnInit, AfterViewInit, FormValidation 
             private customerService: CustomerService,
             private gymPlanService: GymPlanService,
             private spinnerService: NgxSpinnerService,
-            private toast: ToastrService,
             private userStore: UserStoreService,
             private router: Router
         ) {
@@ -62,7 +61,7 @@ export class CustomerComponent implements OnInit, AfterViewInit, FormValidation 
 
         this.customerService.matricular(aluno).subscribe(data => {
             this.success(data.id);
-        }, () => this.error())
+        }, resp => this.error(resp));
     }
 
     setMessages(displayMessage: DisplayMessage) {
@@ -76,8 +75,15 @@ export class CustomerComponent implements OnInit, AfterViewInit, FormValidation 
         this.router.navigate(['/confirmar-conta']);
     }
 
-    private error(){
-        this.spinnerService.hide()
+    private error(response){
+        setTimeout(() => {
+            this.errors = response.error.erros;
+            this.spinnerService.hide();
+        }, 1000);
+
+        setTimeout(() => {
+            this.errors = undefined;
+        }, 7000);
     }
 
     private getGymPlans() {
@@ -87,7 +93,7 @@ export class CustomerComponent implements OnInit, AfterViewInit, FormValidation 
                 this.gymPlans = gymPlans;
                 this.spinnerService.hide();
             }, 1000)
-        }, () => { alert("Erro"), this.spinnerService.hide() })
+        }, response => { this.error(response) })
     }
 
     private createFormGroup() {

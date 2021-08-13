@@ -26,5 +26,11 @@ export class AccountService extends BaseService {
         return this.postAsync(confimarcao, `${this.URL_ACCOUNT}/confirmar`);
     }
 
+    sendCodeEmail(email: any){
+        return this.postAsync(email, `${this.URL_ACCOUNT}/codigo-confirmacao`);
+    }
 
+    newPasswordUser(newPassoword: any){
+        return this.postAsync(newPassoword, `${this.URL_ACCOUNT}/nova-senha`);
+    }
 }

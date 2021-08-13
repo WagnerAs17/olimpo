@@ -23,6 +23,8 @@ export abstract class BaseService {
     }
 
     protected serviceError(response: Response | any){
+        console.log("serviceError");
+        console.log(response);
         let customError: string[] = [];
 
         if(response instanceof HttpErrorResponse){
@@ -33,7 +35,7 @@ export abstract class BaseService {
             }
         }
 
-        return throwError(customError);
+        return throwError(response);
     }
 
     protected extractData(response: any){

@@ -10,11 +10,16 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { CustomerComponent } from './customer/customer.component';
 import { VerifyCodeComponent } from './security/verify-code/verify-code.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { NewPasswordComponent } from './new-password/new-password.component';
+import { ErrorModule } from 'src/app/shared/components/error/error.module';
 @NgModule({
     declarations: [
         LoginComponent,
         CustomerComponent,
-        VerifyCodeComponent
+        VerifyCodeComponent,
+        ForgotPasswordComponent,
+        NewPasswordComponent
     ],
     imports: [ 
         CommonModule, 
@@ -23,7 +28,8 @@ import { VerifyCodeComponent } from './security/verify-code/verify-code.componen
         RouterModule,
         NgxSpinnerModule,
         TextMaskModule,
-        NgBrazil
+        NgBrazil,
+        ErrorModule
     ],
     exports: [ LoginComponent ],
     providers: [],

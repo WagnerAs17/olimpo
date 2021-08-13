@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { NgxSpinnerService } from "ngx-spinner";
@@ -26,8 +26,8 @@ export class LoginComponent implements OnInit {
 
     ngOnInit(): void { 
         this.loginForm = this.fb.group({
-            email: [''],
-            senha: ['']
+            email: ['', Validators.required],
+            senha: ['', Validators.required]
         })
     }
 
@@ -50,5 +50,12 @@ export class LoginComponent implements OnInit {
                 this.spinnerService.hide();
             }, 1000)
         });
+    }
+
+    isValidField(field: string){
+        let formControl = this.loginForm.get(field);
+        return formControl.invalid && 
+            formControl.dirty && 
+            formControl.errors;
     }
 }
