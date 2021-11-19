@@ -2,7 +2,6 @@ import { AfterViewInit, Component, ElementRef, OnInit, ViewChildren } from '@ang
 import { FormBuilder, FormControlName, FormGroup, Validators, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 
-import { NgxSpinnerService } from "ngx-spinner";
 import { CustomValidators } from 'ngx-custom-validators';
 import { MASKS, NgBrazilValidators } from 'ng-brazil';
 
@@ -36,7 +35,6 @@ export class CustomerComponent implements OnInit, AfterViewInit, FormValidation 
             private fb: FormBuilder,
             private customerService: CustomerService,
             private gymPlanService: GymPlanService,
-            private spinnerService: NgxSpinnerService,
             private userStore: UserStoreService,
             private router: Router
         ) {
@@ -54,8 +52,6 @@ export class CustomerComponent implements OnInit, AfterViewInit, FormValidation 
     }
 
     matricular() {
-        this.spinnerService.show();
-        
         let aluno = this.customerForm.getRawValue() as Customer;
         aluno.cpf = this.onlyNumbersCpf(aluno);
 
@@ -69,7 +65,6 @@ export class CustomerComponent implements OnInit, AfterViewInit, FormValidation 
     }
 
     private success(id: string){
-        this.spinnerService.hide();
         this.userStore.setUserId(id);
         alert("Cadastro realizado com sucesso, favor verificar o código enviado por email !");
         this.router.navigate(['/confirmar-conta']);
@@ -78,7 +73,6 @@ export class CustomerComponent implements OnInit, AfterViewInit, FormValidation 
     private error(response){
         setTimeout(() => {
             this.errors = response.error.erros;
-            this.spinnerService.hide();
         }, 1000);
 
         setTimeout(() => {
@@ -87,11 +81,9 @@ export class CustomerComponent implements OnInit, AfterViewInit, FormValidation 
     }
 
     private getGymPlans() {
-        this.spinnerService.show();
         this.gymPlanService.getGymPlans().subscribe(gymPlans => {
             setTimeout(() => {
                 this.gymPlans = gymPlans;
-                this.spinnerService.hide();
             }, 1000)
         }, response => { this.error(response) })
     }

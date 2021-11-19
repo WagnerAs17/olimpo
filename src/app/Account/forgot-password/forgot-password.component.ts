@@ -2,8 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
-import { NgxSpinnerService } from "ngx-spinner";
-
 import { AccountService } from 'src/app/shared/services/account.service';
 import { UserStoreService } from 'src/app/shared/store/user-store.service';
 @Component({
@@ -17,7 +15,6 @@ export class ForgotPasswordComponent implements OnInit {
     (
         private accountService: AccountService,
         private userStore: UserStoreService,
-        private spinnerService: NgxSpinnerService,
         private router: Router
     ) { }
 
@@ -28,7 +25,6 @@ export class ForgotPasswordComponent implements OnInit {
     }
 
     sendConfirmCodePassword(){
-        this.spinnerService.show();
         let email = this.passwordForm.getRawValue();
 
         this.accountService.sendCodeEmail(email)
@@ -39,7 +35,6 @@ export class ForgotPasswordComponent implements OnInit {
 
     private success(response: any){
         this.userStore.setUserId(response.id);
-        this.spinnerService.hide();
         this.router.navigate(['/nova-senha']);
     }
 
